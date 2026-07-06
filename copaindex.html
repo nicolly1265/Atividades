@@ -1,0 +1,1105 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copa do Mundo 2026 - Álbum de Figurinhas</title>
+<style>
+  :root {
+    --gold: #FFD700;
+    --green: #009C3B;
+    --blue: #002776;
+    --red: #C8102E;
+    --white: #FFFFFF;
+    --gray: #f5f5f5;
+    --dark: #1a1a2e;
+    --card-bg: #16213e;
+    --accent: #e94560;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: #fff; min-height: 100vh; }
+
+  /* ---- NAV ---- */
+  nav {
+    background: linear-gradient(135deg, var(--blue), var(--dark));
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo { font-size: 1.4rem; font-weight: 900; color: var(--gold); letter-spacing: 1px; }
+  .nav-logo span { color: var(--green); }
+  .nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .nav-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,0.2);
+    color: #ccc; padding: 6px 14px; border-radius: 20px; cursor: pointer;
+    font-size: 0.8rem; transition: all .2s;
+  }
+  .nav-btn:hover, .nav-btn.active { background: var(--gold); color: var(--dark); border-color: var(--gold); font-weight: 700; }
+  .nav-user { font-size: 0.85rem; color: var(--gold); display: flex; align-items: center; gap: 8px; }
+  .nav-user .logout { cursor: pointer; color: #f88; font-size: 0.8rem; text-decoration: underline; }
+
+  /* ---- PAGES ---- */
+  .page { display: none; padding: 24px; max-width: 1100px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* ---- AUTH ---- */
+  .auth-container {
+    min-height: 85vh; display: flex; align-items: center; justify-content: center;
+  }
+  .auth-box {
+    background: var(--card-bg); border-radius: 20px; padding: 40px;
+    width: 100%; max-width: 420px; border: 1px solid rgba(255,215,0,.2);
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  }
+  .auth-box h2 { text-align: center; margin-bottom: 8px; font-size: 1.6rem; color: var(--gold); }
+  .auth-box p { text-align: center; color: #aaa; margin-bottom: 28px; font-size: 0.9rem; }
+  .auth-tabs { display: flex; margin-bottom: 24px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,215,0,.3); }
+  .auth-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; background: transparent; color: #aaa; font-weight: 600; border: none; transition: all .2s; }
+  .auth-tab.active { background: var(--gold); color: var(--dark); }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; margin-bottom: 6px; color: #ccc; font-size: 0.85rem; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 12px 16px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.05);
+    color: #fff; font-size: 0.95rem; outline: none; transition: border .2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--gold); }
+  .btn-primary {
+    width: 100%; padding: 13px; background: linear-gradient(135deg, var(--gold), #FFA500);
+    color: var(--dark); font-weight: 800; font-size: 1rem; border: none;
+    border-radius: 10px; cursor: pointer; margin-top: 8px; transition: opacity .2s;
+    letter-spacing: .5px;
+  }
+  .btn-primary:hover { opacity: .9; }
+  .btn-secondary {
+    padding: 9px 18px; background: transparent; color: var(--gold);
+    border: 1.5px solid var(--gold); border-radius: 8px; cursor: pointer;
+    font-weight: 600; font-size: 0.85rem; transition: all .2s;
+  }
+  .btn-secondary:hover { background: var(--gold); color: var(--dark); }
+  .btn-danger {
+    padding: 9px 18px; background: transparent; color: #f88;
+    border: 1.5px solid #f88; border-radius: 8px; cursor: pointer;
+    font-weight: 600; font-size: 0.85rem; transition: all .2s;
+  }
+  .btn-danger:hover { background: #f88; color: #fff; }
+  .btn-success {
+    padding: 9px 18px; background: var(--green); color: #fff;
+    border: none; border-radius: 8px; cursor: pointer;
+    font-weight: 600; font-size: 0.85rem; transition: opacity .2s;
+  }
+  .btn-success:hover { opacity: .85; }
+
+  /* ---- HERO ---- */
+  .hero {
+    text-align: center; padding: 48px 24px;
+    background: linear-gradient(135deg, rgba(0,39,118,.8), rgba(0,0,0,.6));
+    border-radius: 20px; margin-bottom: 28px; border: 1px solid rgba(255,215,0,.2);
+    background-image: radial-gradient(circle at 20% 50%, rgba(0,156,59,.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 50%, rgba(255,215,0,.1) 0%, transparent 50%);
+  }
+  .hero h1 { font-size: 2.2rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 30px rgba(255,215,0,.5); }
+  .hero p { color: #ccc; margin-top: 10px; font-size: 1rem; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+  .stat-box {
+    background: rgba(255,255,255,.07); border-radius: 12px; padding: 16px 24px;
+    border: 1px solid rgba(255,215,0,.2); min-width: 110px;
+  }
+  .stat-box .num { font-size: 1.8rem; font-weight: 900; color: var(--gold); }
+  .stat-box .lbl { font-size: 0.75rem; color: #aaa; margin-top: 2px; }
+
+  /* ---- SECTION HEADER ---- */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: gap; gap: 10px; }
+  .section-header h2 { font-size: 1.4rem; color: var(--gold); display: flex; align-items: center; gap: 8px; }
+  .search-bar {
+    padding: 9px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.07); color: #fff; width: 220px; outline: none;
+  }
+  .search-bar:focus { border-color: var(--gold); }
+
+  /* ---- FIGURINHAS GRID ---- */
+  .filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,.2);
+    background: transparent; color: #ccc; cursor: pointer; font-size: 0.8rem; transition: all .2s;
+  }
+  .filter-btn.active { background: var(--gold); color: var(--dark); border-color: var(--gold); font-weight: 700; }
+  .stickers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
+  .sticker-card {
+    background: var(--card-bg); border-radius: 12px; padding: 12px 8px;
+    text-align: center; border: 2px solid transparent; cursor: pointer;
+    transition: all .2s; position: relative; user-select: none;
+  }
+  .sticker-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .sticker-card.owned { border-color: var(--green); }
+  .sticker-card.duplicate { border-color: var(--gold); }
+  .sticker-card.missing { opacity: .45; }
+  .sticker-card .num { font-size: 0.7rem; color: #aaa; }
+  .sticker-card .emoji { font-size: 2rem; margin: 4px 0; }
+  .sticker-card .name { font-size: 0.72rem; font-weight: 700; color: #eee; line-height: 1.2; }
+  .sticker-card .country { font-size: 0.65rem; color: #aaa; }
+  .badge-count {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    width: 22px; height: 22px; font-size: 0.7rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .badge-dup {
+    position: absolute; top: -6px; left: -6px;
+    background: var(--accent); color: #fff; border-radius: 10px;
+    padding: 1px 6px; font-size: 0.65rem; font-weight: 700;
+  }
+
+  /* ---- ALBUM ---- */
+  .album-wrap { background: linear-gradient(135deg, #1a0a2e, #0d1b2a); border-radius: 20px; padding: 24px; border: 2px solid var(--gold); }
+  .album-title { text-align: center; font-size: 1.8rem; font-weight: 900; color: var(--gold); margin-bottom: 4px; }
+  .album-subtitle { text-align: center; color: #aaa; margin-bottom: 20px; font-size: 0.85rem; }
+  .album-progress { margin-bottom: 20px; }
+  .progress-bar { height: 12px; background: rgba(255,255,255,.1); border-radius: 10px; overflow: hidden; margin-top: 6px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--gold)); border-radius: 10px; transition: width .5s; }
+  .progress-text { display: flex; justify-content: space-between; font-size: 0.8rem; color: #aaa; margin-top: 4px; }
+  .album-section-title { font-size: 1rem; font-weight: 700; color: var(--gold); margin: 20px 0 12px; padding-left: 10px; border-left: 3px solid var(--gold); }
+  .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
+  .album-slot {
+    background: rgba(255,255,255,.05); border-radius: 10px; aspect-ratio: 0.7;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 2px dashed rgba(255,255,255,.15); position: relative; transition: all .2s; cursor: pointer;
+  }
+  .album-slot:hover { border-color: var(--gold); }
+  .album-slot.filled { background: linear-gradient(135deg, rgba(0,156,59,.2), rgba(0,39,118,.2)); border: 2px solid var(--green); }
+  .album-slot .slot-num { font-size: 0.65rem; color: #888; }
+  .album-slot .slot-emoji { font-size: 1.8rem; }
+  .album-slot .slot-name { font-size: 0.6rem; color: #ccc; text-align: center; padding: 0 4px; }
+  .album-slot .check { position: absolute; top: 3px; right: 3px; color: var(--green); font-size: 0.8rem; }
+
+  /* ---- TROCAS / MERCADO ---- */
+  .cards-list { display: flex; flex-direction: column; gap: 12px; }
+  .trade-card, .market-card {
+    background: var(--card-bg); border-radius: 14px; padding: 16px 20px;
+    border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center;
+    gap: 16px; flex-wrap: wrap; justify-content: space-between;
+  }
+  .trade-card:hover, .market-card:hover { border-color: var(--gold); }
+  .trade-info { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+  .trade-emoji { font-size: 2rem; }
+  .trade-details h4 { font-size: 0.95rem; font-weight: 700; color: #eee; }
+  .trade-details p { font-size: 0.8rem; color: #aaa; margin-top: 2px; }
+  .trade-arrows { color: var(--gold); font-size: 1.2rem; }
+  .price-tag { font-size: 1.1rem; font-weight: 900; color: var(--gold); white-space: nowrap; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-right: 4px; }
+  .tag-rare { background: rgba(255,215,0,.2); color: var(--gold); border: 1px solid var(--gold); }
+  .tag-common { background: rgba(200,200,200,.15); color: #ccc; border: 1px solid #555; }
+  .tag-legend { background: rgba(233,69,96,.2); color: var(--accent); border: 1px solid var(--accent); }
+
+  /* ---- COMPRAR PACOTES ---- */
+  .packs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+  .pack-card {
+    background: var(--card-bg); border-radius: 16px; padding: 24px; text-align: center;
+    border: 1px solid rgba(255,255,255,.1); cursor: pointer; transition: all .25s; position: relative; overflow: hidden;
+  }
+  .pack-card:hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 10px 30px rgba(255,215,0,.15); }
+  .pack-card .pack-emoji { font-size: 3rem; margin-bottom: 12px; }
+  .pack-card h3 { font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  .pack-card p { font-size: 0.8rem; color: #aaa; margin-bottom: 16px; line-height: 1.4; }
+  .pack-price { font-size: 1.3rem; font-weight: 900; color: var(--gold); }
+  .pack-badge { position: absolute; top: 12px; right: 12px; background: var(--accent); color: #fff; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+  .coins-bar { display: flex; align-items: center; gap: 8px; background: rgba(255,215,0,.1); border: 1px solid rgba(255,215,0,.3); border-radius: 12px; padding: 10px 16px; margin-bottom: 24px; }
+  .coins-bar span { color: var(--gold); font-weight: 700; }
+
+  /* ---- MODAL ---- */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 999; align-items: center; justify-content: center; }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--card-bg); border-radius: 20px; padding: 32px; max-width: 460px; width: 90%;
+    border: 1px solid rgba(255,215,0,.3); box-shadow: 0 20px 60px rgba(0,0,0,.8);
+    position: relative; animation: modalIn .25s ease;
+  }
+  @keyframes modalIn { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-close { position: absolute; top: 14px; right: 18px; background: none; border: none; color: #aaa; font-size: 1.4rem; cursor: pointer; }
+  .modal h3 { font-size: 1.3rem; color: var(--gold); margin-bottom: 16px; }
+  .opening-result { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 20px 0; }
+  .result-sticker {
+    background: rgba(255,255,255,.07); border-radius: 12px; padding: 10px 6px;
+    text-align: center; border: 2px solid transparent; animation: popIn .3s ease forwards;
+    opacity: 0;
+  }
+  .result-sticker.rare { border-color: var(--gold); background: rgba(255,215,0,.1); }
+  .result-sticker.dup { border-color: var(--accent); }
+  @keyframes popIn { from { transform: scale(0) rotate(-10deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+  .result-sticker .r-emoji { font-size: 1.6rem; }
+  .result-sticker .r-name { font-size: 0.6rem; color: #ccc; margin-top: 4px; }
+  .result-sticker .r-dup { font-size: 0.6rem; color: var(--accent); font-weight: 700; }
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; background: var(--green); color: #fff;
+    padding: 12px 20px; border-radius: 10px; font-weight: 700; font-size: 0.9rem;
+    z-index: 9999; animation: toastIn .3s ease; display: none; max-width: 300px;
+  }
+  @keyframes toastIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 8px 18px; border-radius: 20px; border: 1px solid rgba(255,255,255,.2);
+    background: transparent; color: #ccc; cursor: pointer; font-size: 0.85rem; transition: all .2s;
+  }
+  .tab-btn.active { background: var(--gold); color: var(--dark); border-color: var(--gold); font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.4rem; }
+    .nav-logo { font-size: 1rem; }
+    .opening-result { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav" style="display:none">
+  <div class="nav-logo">⚽ Copa<span>2026</span></div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('home')">🏠 Início</button>
+    <button class="nav-btn" onclick="showPage('colecao')">🃏 Coleção</button>
+    <button class="nav-btn" onclick="showPage('album')">📖 Álbum</button>
+    <button class="nav-btn" onclick="showPage('trocas')">🔄 Trocas</button>
+    <button class="nav-btn" onclick="showPage('mercado')">🛒 Mercado</button>
+    <button class="nav-btn" onclick="showPage('comprar')">📦 Pacotes</button>
+  </div>
+  <div class="nav-user" id="navUser"></div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ===================== AUTH PAGE ===================== -->
+<div class="page active" id="page-auth">
+  <div class="auth-container">
+    <div class="auth-box">
+      <div style="text-align:center;font-size:3rem;margin-bottom:8px">⚽</div>
+      <h2>Copa 2026</h2>
+      <p>O álbum de figurinhas digital mais completo!</p>
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchAuthTab('login')">Entrar</button>
+        <button class="auth-tab" onclick="switchAuthTab('register')">Cadastrar</button>
+      </div>
+      <!-- LOGIN -->
+      <div id="login-form">
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="loginEmail" placeholder="seu@email.com">
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" id="loginPass" placeholder="••••••••">
+        </div>
+        <button class="btn-primary" onclick="doLogin()">🔐 Entrar</button>
+        <p style="text-align:center;margin-top:14px;color:#aaa;font-size:0.8rem">
+          Não tem conta? <span style="color:var(--gold);cursor:pointer" onclick="switchAuthTab('register')">Cadastre-se grátis</span>
+        </p>
+      </div>
+      <!-- REGISTER -->
+      <div id="register-form" style="display:none">
+        <div class="form-group">
+          <label>Nome completo</label>
+          <input type="text" id="regName" placeholder="Seu nome">
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="regEmail" placeholder="seu@email.com">
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" id="regPass" placeholder="mínimo 6 caracteres">
+        </div>
+        <div class="form-group">
+          <label>Time favorito</label>
+          <select id="regTeam">
+            <option value="">Selecione...</option>
+            <option>🇧🇷 Brasil</option><option>🇦🇷 Argentina</option><option>🇫🇷 França</option>
+            <option>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra</option><option>🇩🇪 Alemanha</option><option>🇵🇹 Portugal</option>
+            <option>🇪🇸 Espanha</option><option>🇺🇾 Uruguai</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="doRegister()">✅ Criar Conta</button>
+        <p style="text-align:center;margin-top:14px;color:#aaa;font-size:0.8rem">
+          Já tem conta? <span style="color:var(--gold);cursor:pointer" onclick="switchAuthTab('login')">Faça login</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div class="page" id="page-home">
+  <div class="hero">
+    <div style="font-size:3rem">🏆</div>
+    <h1>Copa do Mundo 2026</h1>
+    <p id="heroGreeting">Bem-vindo ao álbum digital!</p>
+    <div class="hero-stats">
+      <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lbl">Figurinhas</div></div>
+      <div class="stat-box"><div class="num" id="statUnique">0</div><div class="lbl">Únicas</div></div>
+      <div class="stat-box"><div class="num" id="statDup">0</div><div class="lbl">Repetidas</div></div>
+      <div class="stat-box"><div class="num" id="statAlbum">0%</div><div class="lbl">Álbum</div></div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px">
+    <div onclick="showPage('colecao')" style="cursor:pointer" class="trade-card" style="flex-direction:column">
+      <div style="font-size:2rem">🃏</div>
+      <div><h4>Minha Coleção</h4><p>Veja todas as suas figurinhas e repetidas</p></div>
+    </div>
+    <div onclick="showPage('album')" style="cursor:pointer" class="trade-card">
+      <div style="font-size:2rem">📖</div>
+      <div><h4>Meu Álbum</h4><p>Cole suas figurinhas no álbum</p></div>
+    </div>
+    <div onclick="showPage('trocas')" style="cursor:pointer" class="trade-card">
+      <div style="font-size:2rem">🔄</div>
+      <div><h4>Trocas</h4><p>Troque repetidas com outros colecionadores</p></div>
+    </div>
+    <div onclick="showPage('mercado')" style="cursor:pointer" class="trade-card">
+      <div style="font-size:2rem">🛒</div>
+      <div><h4>Mercado</h4><p>Compre e venda figurinhas avulsas</p></div>
+    </div>
+    <div onclick="showPage('comprar')" style="cursor:pointer" class="trade-card">
+      <div style="font-size:2rem">📦</div>
+      <div><h4>Comprar Pacotes</h4><p>Abra novos pacotes de figurinhas</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== COLEÇÃO PAGE ===================== -->
+<div class="page" id="page-colecao">
+  <div class="section-header">
+    <h2>🃏 Minha Coleção</h2>
+    <input class="search-bar" type="text" placeholder="🔍 Buscar figurinha..." oninput="filterStickers(this.value)">
+  </div>
+  <div class="filters" id="colFilters">
+    <button class="filter-btn active" onclick="setFilter('all',this)">Todas</button>
+    <button class="filter-btn" onclick="setFilter('owned',this)">✅ Tenho</button>
+    <button class="filter-btn" onclick="setFilter('missing',this)">❌ Faltam</button>
+    <button class="filter-btn" onclick="setFilter('duplicate',this)">🔁 Repetidas</button>
+    <button class="filter-btn" onclick="setFilter('rare',this)">⭐ Raras</button>
+  </div>
+  <div style="color:#aaa;font-size:0.8rem;margin-bottom:12px" id="colCount"></div>
+  <div class="stickers-grid" id="stickersGrid"></div>
+</div>
+
+<!-- ===================== ALBUM PAGE ===================== -->
+<div class="page" id="page-album">
+  <div class="album-wrap">
+    <div class="album-title">📖 Álbum Copa 2026</div>
+    <div class="album-subtitle">Clique numa figurinha que você possui para colá-la no álbum</div>
+    <div class="album-progress">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:#ccc;font-size:0.9rem">Progresso do Álbum</span>
+        <span id="albumPct" style="color:var(--gold);font-weight:700">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="albumBar" style="width:0%"></div></div>
+      <div class="progress-text"><span id="albumFilled">0 coladas</span><span id="albumTotal">/ 0 vagas</span></div>
+    </div>
+    <div id="albumContent"></div>
+  </div>
+</div>
+
+<!-- ===================== TROCAS PAGE ===================== -->
+<div class="page" id="page-trocas">
+  <div class="section-header">
+    <h2>🔄 Trocas</h2>
+    <button class="btn-secondary" onclick="openNewTrade()">+ Propor Troca</button>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="setTradeTab('all',this)">Todas as Trocas</button>
+    <button class="tab-btn" onclick="setTradeTab('mine',this)">Minhas Propostas</button>
+    <button class="tab-btn" onclick="setTradeTab('received',this)">Recebidas</button>
+  </div>
+  <div class="cards-list" id="tradeList"></div>
+</div>
+
+<!-- ===================== MERCADO PAGE ===================== -->
+<div class="page" id="page-mercado">
+  <div class="section-header">
+    <h2>🛒 Mercado</h2>
+    <button class="btn-secondary" onclick="openSellModal()">+ Vender Figurinha</button>
+  </div>
+  <div class="coins-bar">💰 <span id="userCoins">500</span> moedas disponíveis</div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="setMarketTab('all',this)">Todas</button>
+    <button class="tab-btn" onclick="setMarketTab('rare',this)">⭐ Raras</button>
+    <button class="tab-btn" onclick="setMarketTab('mine',this)">Minhas Vendas</button>
+  </div>
+  <div class="cards-list" id="marketList"></div>
+</div>
+
+<!-- ===================== COMPRAR PAGE ===================== -->
+<div class="page" id="page-comprar">
+  <div class="section-header">
+    <h2>📦 Comprar Pacotes</h2>
+  </div>
+  <div class="coins-bar">💰 Você tem <span id="userCoins2">500</span> moedas &nbsp;|&nbsp; 🎁 <span id="userPacks">3</span> pacotes gratuitos disponíveis</div>
+  <div class="packs-grid">
+    <div class="pack-card" onclick="buyPack('basico',10,50)">
+      <div class="pack-emoji">📦</div>
+      <h3>Pacote Básico</h3>
+      <p>5 figurinhas aleatórias com chance de rara</p>
+      <div class="pack-price">50 moedas</div>
+    </div>
+    <div class="pack-card" onclick="buyPack('prata',18,90)">
+      <div class="pack-badge">Popular</div>
+      <div class="pack-emoji">🥈</div>
+      <h3>Pacote Prata</h3>
+      <p>10 figurinhas + 1 rara garantida</p>
+      <div class="pack-price">90 moedas</div>
+    </div>
+    <div class="pack-card" onclick="buyPack('ouro',25,150)">
+      <div class="pack-emoji">🥇</div>
+      <h3>Pacote Ouro</h3>
+      <p>15 figurinhas + 3 raras garantidas</p>
+      <div class="pack-price">150 moedas</div>
+    </div>
+    <div class="pack-card" onclick="buyPack('lendario',40,250)">
+      <div class="pack-badge">Exclusivo</div>
+      <div class="pack-emoji">💎</div>
+      <h3>Pacote Lendário</h3>
+      <p>25 figurinhas + 1 lendária garantida + 5 raras</p>
+      <div class="pack-price">250 moedas</div>
+    </div>
+    <div class="pack-card" onclick="openFreePackIfAvailable()" style="border-color:var(--green)">
+      <div class="pack-badge" style="background:var(--green)">Grátis</div>
+      <div class="pack-emoji">🎁</div>
+      <h3>Pacote Diário</h3>
+      <p>3 pacotes gratuitos por dia para todos os usuários</p>
+      <div class="pack-price" style="color:var(--green)">GRÁTIS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODALS ===================== -->
+<!-- Abrir Pacote -->
+<div class="modal-overlay" id="modalPack">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalPack')">✕</button>
+    <h3 id="modalPackTitle">📦 Abrindo Pacote...</h3>
+    <div class="opening-result" id="openingResult"></div>
+    <p style="color:#aaa;font-size:0.8rem;text-align:center" id="dupNote"></p>
+    <button class="btn-primary" onclick="closeModal('modalPack')" style="margin-top:16px">🎉 Ótimo!</button>
+  </div>
+</div>
+
+<!-- Detalhes da Figurinha -->
+<div class="modal-overlay" id="modalSticker">
+  <div class="modal" style="max-width:360px;text-align:center">
+    <button class="modal-close" onclick="closeModal('modalSticker')">✕</button>
+    <div id="stickerDetail"></div>
+  </div>
+</div>
+
+<!-- Propor Troca -->
+<div class="modal-overlay" id="modalTrade">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalTrade')">✕</button>
+    <h3>🔄 Propor Troca</h3>
+    <div class="form-group" style="margin-top:16px">
+      <label>Figurinha que você OFERECE (repetida)</label>
+      <select id="tradeOffer" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff"></select>
+    </div>
+    <div class="form-group">
+      <label>Figurinha que você QUER (do mercado)</label>
+      <select id="tradeWant" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff"></select>
+    </div>
+    <div class="form-group">
+      <label>Mensagem (opcional)</label>
+      <input type="text" id="tradeMsg" placeholder="Ex: Aceito qualquer jogador raro..." style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff">
+    </div>
+    <button class="btn-primary" onclick="confirmTrade()">✅ Publicar Proposta</button>
+  </div>
+</div>
+
+<!-- Vender -->
+<div class="modal-overlay" id="modalSell">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalSell')">✕</button>
+    <h3>💰 Vender Figurinha</h3>
+    <div class="form-group" style="margin-top:16px">
+      <label>Figurinha para vender (repetida)</label>
+      <select id="sellSticker" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff"></select>
+    </div>
+    <div class="form-group">
+      <label>Preço (moedas)</label>
+      <input type="number" id="sellPrice" value="25" min="5" max="500" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff">
+    </div>
+    <button class="btn-primary" onclick="confirmSell()">📤 Colocar à Venda</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  DATA
+// ============================================================
+const TEAMS = [
+  {id:'BRA',name:'Brasil',flag:'🇧🇷',players:['Vinicius Jr','Rodrygo','Endrick','Marquinhos','Alisson']},
+  {id:'ARG',name:'Argentina',flag:'🇦🇷',players:['Messi','Di María','De Paul','Romero','Martínez']},
+  {id:'FRA',name:'França',flag:'🇫🇷',players:['Mbappé','Griezmann','Camavinga','Upamecano','Maignan']},
+  {id:'POR',name:'Portugal',flag:'🇵🇹',players:['Cristiano Ronaldo','Bruno Fernandes','Bernardo Silva','Ruben Dias','Diogo Costa']},
+  {id:'ESP',name:'Espanha',flag:'🇪🇸',players:['Pedri','Yamal','Morata','Rodri','Unai Simón']},
+  {id:'ENG',name:'Inglaterra',flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',players:['Kane','Bellingham','Saka','Rice','Pickford']},
+  {id:'GER',name:'Alemanha',flag:'🇩🇪',players:['Musiala','Wirtz','Gnabry','Rüdiger','Neuer']},
+  {id:'URU',name:'Uruguai',flag:'🇺🇾',players:['Núñez','Valverde','Bentancur','Araujo','Olivera']},
+];
+const EMOJIS = ['⚽','🥅','🏃','🧤','🥋','👟','🦅','🐅','⚡','🌟','💫','🔥'];
+const LEGEND_PLAYERS = ['Messi','Cristiano Ronaldo','Mbappé','Vinicius Jr'];
+
+let allStickers = [];
+let currentUser = null;
+let userCollection = {}; // stickerId -> count
+let albumPasted = {};   // stickerId -> pasted (true/false)
+let userCoins = 500;
+let freePacks = 3;
+let trades = [];
+let listings = [];
+let currentFilter = 'all';
+let currentSearchQ = '';
+let currentTradeTab = 'all';
+let currentMarketTab = 'all';
+
+// Build sticker list
+(function(){
+  let idx = 1;
+  TEAMS.forEach(team => {
+    team.players.forEach(player => {
+      const isLegend = LEGEND_PLAYERS.includes(player);
+      const isRare = isLegend || Math.random() < 0.3;
+      allStickers.push({
+        id: `${team.id}_${idx}`,
+        num: idx,
+        name: player,
+        team: team.name,
+        flag: team.flag,
+        emoji: isLegend ? '⭐' : EMOJIS[Math.floor(Math.random()*EMOJIS.length)],
+        rare: isRare,
+        legend: isLegend,
+      });
+      idx++;
+    });
+  });
+  // Add special stickers
+  const specials = [
+    {name:'Taça da Copa',emoji:'🏆',rare:true,legend:false},
+    {name:'Bola Oficial',emoji:'⚽',rare:false,legend:false},
+    {name:'Mascote 2026',emoji:'🦅',rare:true,legend:false},
+    {name:'Estádio MetLife',emoji:'🏟️',rare:false,legend:false},
+    {name:'Logo Copa 2026',emoji:'🌍',rare:false,legend:false},
+  ];
+  specials.forEach(s => {
+    allStickers.push({id:`SPEC_${idx}`,num:idx,name:s.name,team:'Especial',flag:'✨',emoji:s.emoji,rare:s.rare,legend:s.legend});
+    idx++;
+  });
+})();
+
+// Pre-seed collection
+function seedCollection(){
+  const toGet = Math.floor(allStickers.length * 0.55);
+  const shuffled = [...allStickers].sort(()=>Math.random()-.5).slice(0, toGet);
+  shuffled.forEach(s => {
+    const count = Math.random() < 0.35 ? Math.floor(Math.random()*3)+2 : 1;
+    userCollection[s.id] = (userCollection[s.id]||0) + count;
+  });
+}
+
+// Pre-seed trades & listings
+function seedTrades(){
+  const names = ['Carlos_São Paulo','João_Rio','Ana_Curitiba','Pedro_BH'];
+  const some = allStickers.slice(0,12);
+  for(let i=0;i<8;i++){
+    const offer = some[i%some.length];
+    const want = some[(i+3)%some.length];
+    trades.push({
+      id:`T${i}`, user: names[i%names.length],
+      offer: offer, want: want,
+      msg: i%2===0 ? 'Aceito equivalente!' : 'Negocio jogadores raros',
+      mine: i===0 || i===2, received: i===4,
+      ts: Date.now()-i*3600000
+    });
+  }
+  const prices = [20,35,50,80,120,200];
+  allStickers.slice(5,15).forEach((s,i) => {
+    listings.push({
+      id:`L${i}`, seller: names[i%names.length],
+      sticker: s, price: s.legend?200:s.rare?prices[Math.min(i,prices.length-1)]:prices[0],
+      mine: i===0
+    });
+  });
+}
+
+// ============================================================
+//  AUTH
+// ============================================================
+function switchAuthTab(tab){
+  document.getElementById('login-form').style.display = tab==='login'?'block':'none';
+  document.getElementById('register-form').style.display = tab==='register'?'block':'none';
+  document.querySelectorAll('.auth-tab').forEach((b,i)=>{
+    b.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register'));
+  });
+}
+
+function doLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if(!email||!pass){ showToast('⚠️ Preencha todos os campos','#e94560'); return; }
+  const name = email.split('@')[0];
+  loginUser(name, email);
+}
+
+function doRegister(){
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  if(!name||!email||!pass){ showToast('⚠️ Preencha todos os campos','#e94560'); return; }
+  if(pass.length<6){ showToast('⚠️ Senha deve ter 6+ caracteres','#e94560'); return; }
+  showToast('🎉 Conta criada com sucesso!');
+  loginUser(name, email);
+}
+
+function loginUser(name, email){
+  currentUser = {name, email};
+  seedCollection();
+  seedTrades();
+  document.getElementById('mainNav').style.display = 'flex';
+  document.getElementById('navUser').innerHTML =
+    `<span>👤 ${name}</span><span class="logout" onclick="doLogout()">Sair</span>`;
+  updateStats();
+  showPage('home');
+  showToast(`⚽ Bem-vindo, ${name}!`);
+}
+
+function doLogout(){
+  currentUser = null; userCollection = {}; albumPasted = {};
+  userCoins = 500; freePacks = 3; trades = []; listings = [];
+  document.getElementById('mainNav').style.display = 'none';
+  showPage('auth');
+}
+
+// ============================================================
+//  NAVIGATION
+// ============================================================
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(id) || (id==='home'&&b.textContent.includes('Início')));
+  });
+  if(id==='colecao') renderCollection();
+  if(id==='album') renderAlbum();
+  if(id==='trocas') renderTrades();
+  if(id==='mercado') renderMarket();
+  if(id==='comprar') updateCoinsDisplay();
+}
+
+// ============================================================
+//  STATS
+// ============================================================
+function updateStats(){
+  const total = Object.values(userCollection).reduce((a,b)=>a+b,0);
+  const unique = Object.keys(userCollection).filter(k=>userCollection[k]>0).length;
+  const dup = Object.keys(userCollection).filter(k=>userCollection[k]>1).reduce((a,k)=>a+(userCollection[k]-1),0);
+  const albumFilled = Object.keys(albumPasted).filter(k=>albumPasted[k]).length;
+  const pct = Math.round((albumFilled/allStickers.length)*100);
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statUnique').textContent = unique;
+  document.getElementById('statDup').textContent = dup;
+  document.getElementById('statAlbum').textContent = pct+'%';
+  if(currentUser) document.getElementById('heroGreeting').textContent = `Olá, ${currentUser.name}! Continue completando seu álbum! 🔥`;
+}
+
+// ============================================================
+//  COLLECTION
+// ============================================================
+let currentFilterMode = 'all';
+let currentSearch = '';
+
+function setFilter(mode, btn){
+  currentFilterMode = mode;
+  document.querySelectorAll('#colFilters .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCollection();
+}
+
+function filterStickers(q){
+  currentSearch = q.toLowerCase();
+  renderCollection();
+}
+
+function renderCollection(){
+  let list = allStickers.filter(s => {
+    const matchSearch = !currentSearch || s.name.toLowerCase().includes(currentSearch) || s.team.toLowerCase().includes(currentSearch);
+    const count = userCollection[s.id]||0;
+    const matchFilter =
+      currentFilterMode==='all' ||
+      (currentFilterMode==='owned' && count>0) ||
+      (currentFilterMode==='missing' && count===0) ||
+      (currentFilterMode==='duplicate' && count>1) ||
+      (currentFilterMode==='rare' && s.rare);
+    return matchSearch && matchFilter;
+  });
+  document.getElementById('colCount').textContent = `${list.length} figurinha(s) encontrada(s)`;
+  const grid = document.getElementById('stickersGrid');
+  grid.innerHTML = list.map(s => {
+    const count = userCollection[s.id]||0;
+    const dup = count > 1;
+    const cls = count===0?'missing':dup?'duplicate':'owned';
+    return `<div class="sticker-card ${cls}" onclick="openStickerDetail('${s.id}')">
+      ${count>1?`<div class="badge-dup">+${count-1}</div>`:''}
+      ${count>0?`<div class="badge-count">${count}</div>`:''}
+      <div class="num">#${s.num}</div>
+      <div class="emoji">${s.emoji}</div>
+      <div class="name">${s.name}</div>
+      <div class="country">${s.flag} ${s.team}</div>
+      ${s.rare?'<div style="font-size:0.6rem;color:var(--gold);margin-top:3px">⭐ RARA</div>':''}
+      ${s.legend?'<div style="font-size:0.6rem;color:var(--accent);margin-top:2px">💎 LENDÁRIA</div>':''}
+    </div>`;
+  }).join('');
+}
+
+function openStickerDetail(id){
+  const s = allStickers.find(x=>x.id===id);
+  const count = userCollection[s.id]||0;
+  const inAlbum = albumPasted[s.id];
+  document.getElementById('stickerDetail').innerHTML = `
+    <div style="font-size:4rem;margin-bottom:8px">${s.emoji}</div>
+    <h3 style="color:var(--gold);font-size:1.2rem">${s.name}</h3>
+    <p style="color:#aaa;margin-top:4px">${s.flag} ${s.team}</p>
+    <div style="display:flex;justify-content:center;gap:8px;margin:16px 0;flex-wrap:wrap">
+      ${s.rare?'<span class="tag tag-rare">⭐ Rara</span>':'<span class="tag tag-common">Comum</span>'}
+      ${s.legend?'<span class="tag tag-legend">💎 Lendária</span>':''}
+    </div>
+    <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:14px;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px">
+        <span style="color:#aaa">Você possui:</span><strong style="color:var(--gold)">${count} cópia(s)</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem">
+        <span style="color:#aaa">Repetidas:</span><strong style="color:var(--accent)">${Math.max(0,count-1)}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-top:6px">
+        <span style="color:#aaa">No álbum:</span><strong style="color:${inAlbum?'var(--green)':'#aaa'}">${inAlbum?'✅ Colada':'Não colada'}</strong>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      ${count>0&&!inAlbum?`<button class="btn-success" onclick="pasteToAlbum('${id}');closeModal('modalSticker')">📖 Colar no Álbum</button>`:''}
+      ${count>1?`<button class="btn-secondary" onclick="closeModal('modalSticker');showPage('trocas');openNewTrade()">🔄 Trocar</button>`:''}
+      ${count>1?`<button class="btn-secondary" onclick="closeModal('modalSticker');showPage('mercado');openSellModal()">💰 Vender</button>`:''}
+    </div>
+  `;
+  document.getElementById('modalSticker').classList.add('show');
+}
+
+// ============================================================
+//  ALBUM
+// ============================================================
+function renderAlbum(){
+  const filled = Object.keys(albumPasted).filter(k=>albumPasted[k]).length;
+  const total = allStickers.length;
+  const pct = Math.round((filled/total)*100);
+  document.getElementById('albumPct').textContent = pct+'%';
+  document.getElementById('albumBar').style.width = pct+'%';
+  document.getElementById('albumFilled').textContent = `${filled} coladas`;
+  document.getElementById('albumTotal').textContent = `/ ${total} vagas`;
+
+  const content = document.getElementById('albumContent');
+  let html = '';
+  TEAMS.forEach(team => {
+    const teamStickers = allStickers.filter(s=>s.team===team.name);
+    html += `<div class="album-section-title">${team.flag} ${team.name}</div>
+    <div class="album-grid">`;
+    teamStickers.forEach(s => {
+      const filled = albumPasted[s.id];
+      const owned = (userCollection[s.id]||0)>0;
+      html += `<div class="album-slot ${filled?'filled':''}" onclick="albumSlotClick('${s.id}')">
+        ${filled?'<div class="check">✓</div>':''}
+        <div class="slot-num">#${s.num}</div>
+        <div class="slot-emoji">${filled?s.emoji:'❓'}</div>
+        <div class="slot-name">${filled?s.name:owned?'<span style="color:var(--gold);font-size:0.65rem">Colar!</span>':'?'}</div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  // Special
+  const specs = allStickers.filter(s=>s.team==='Especial');
+  html += `<div class="album-section-title">✨ Especiais</div><div class="album-grid">`;
+  specs.forEach(s => {
+    const filled = albumPasted[s.id];
+    const owned = (userCollection[s.id]||0)>0;
+    html += `<div class="album-slot ${filled?'filled':''}" onclick="albumSlotClick('${s.id}')">
+      ${filled?'<div class="check">✓</div>':''}
+      <div class="slot-num">#${s.num}</div>
+      <div class="slot-emoji">${filled?s.emoji:'❓'}</div>
+      <div class="slot-name">${filled?s.name:owned?'<span style="color:var(--gold);font-size:0.65rem">Colar!</span>':'?'}</div>
+    </div>`;
+  });
+  html += '</div>';
+  content.innerHTML = html;
+}
+
+function albumSlotClick(id){
+  const s = allStickers.find(x=>x.id===id);
+  const count = userCollection[id]||0;
+  if(albumPasted[id]){ showToast('📖 Figurinha já está colada no álbum!','#aaa'); return; }
+  if(count===0){ showToast('❌ Você não possui essa figurinha!','#e94560'); return; }
+  pasteToAlbum(id);
+}
+
+function pasteToAlbum(id){
+  const s = allStickers.find(x=>x.id===id);
+  albumPasted[id] = true;
+  showToast(`📖 ${s.name} colada no álbum!`);
+  updateStats();
+  if(document.getElementById('page-album').classList.contains('active')) renderAlbum();
+}
+
+// ============================================================
+//  TROCAS
+// ============================================================
+function setTradeTab(tab, btn){
+  currentTradeTab = tab;
+  document.querySelectorAll('#page-trocas .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTrades();
+}
+
+function renderTrades(){
+  let list = trades;
+  if(currentTradeTab==='mine') list = trades.filter(t=>t.mine);
+  if(currentTradeTab==='received') list = trades.filter(t=>t.received);
+  const container = document.getElementById('tradeList');
+  if(!list.length){ container.innerHTML = '<p style="color:#aaa;text-align:center;padding:32px">Nenhuma troca encontrada.</p>'; return; }
+  container.innerHTML = list.map(t => `
+    <div class="trade-card">
+      <div class="trade-info">
+        <div>
+          <div style="font-size:0.7rem;color:#aaa;margin-bottom:6px">Oferece</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:1.8rem">${t.offer.emoji}</span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:700">${t.offer.name}</div>
+              <div style="font-size:0.7rem;color:#aaa">${t.offer.flag} ${t.offer.team}</div>
+              ${t.offer.rare?'<span class="tag tag-rare" style="font-size:0.6rem">⭐</span>':''}
+            </div>
+          </div>
+        </div>
+        <div class="trade-arrows">⇄</div>
+        <div>
+          <div style="font-size:0.7rem;color:#aaa;margin-bottom:6px">Quer</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:1.8rem">${t.want.emoji}</span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:700">${t.want.name}</div>
+              <div style="font-size:0.7rem;color:#aaa">${t.want.flag} ${t.want.team}</div>
+              ${t.want.rare?'<span class="tag tag-rare" style="font-size:0.6rem">⭐</span>':''}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:0.75rem;color:#aaa;margin-bottom:6px">👤 ${t.user.replace('_',' - ')}</div>
+        <div style="font-size:0.75rem;color:#aaa;margin-bottom:8px;font-style:italic">"${t.msg}"</div>
+        <div style="display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap">
+          ${t.mine?
+            `<button class="btn-danger" onclick="cancelTrade('${t.id}')">🗑️ Cancelar</button>`:
+            `<button class="btn-success" onclick="acceptTrade('${t.id}')">✅ Aceitar</button>
+             <button class="btn-secondary" onclick="counterTrade('${t.id}')">↩️ Contrapropor</button>`
+          }
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openNewTrade(){
+  const dups = allStickers.filter(s=>(userCollection[s.id]||0)>1);
+  const missing = allStickers.filter(s=>(userCollection[s.id]||0)===0);
+  document.getElementById('tradeOffer').innerHTML = dups.map(s=>`<option value="${s.id}">${s.flag} ${s.name} (${userCollection[s.id]-1} rep.)</option>`).join('');
+  document.getElementById('tradeWant').innerHTML = missing.map(s=>`<option value="${s.id}">${s.flag} ${s.name}</option>`).join('');
+  document.getElementById('modalTrade').classList.add('show');
+}
+
+function confirmTrade(){
+  const offerId = document.getElementById('tradeOffer').value;
+  const wantId = document.getElementById('tradeWant').value;
+  const msg = document.getElementById('tradeMsg').value || 'Aguardando proposta!';
+  if(!offerId||!wantId){ showToast('⚠️ Selecione as figurinhas','#e94560'); return; }
+  const offer = allStickers.find(s=>s.id===offerId);
+  const want = allStickers.find(s=>s.id===wantId);
+  trades.unshift({id:'T'+Date.now(),user:`${currentUser.name}_Você`,offer,want,msg,mine:true,received:false,ts:Date.now()});
+  closeModal('modalTrade');
+  showToast('🔄 Proposta publicada com sucesso!');
+  renderTrades();
+}
+
+function acceptTrade(id){
+  const trade = trades.find(t=>t.id===id);
+  if(!trade) return;
+  // Give wanted sticker
+  userCollection[trade.want.id] = (userCollection[trade.want.id]||0)+1;
+  // Remove offered from user's dups
+  if((userCollection[trade.offer.id]||0)>0) userCollection[trade.offer.id]--;
+  trades = trades.filter(t=>t.id!==id);
+  updateStats();
+  renderTrades();
+  showToast(`✅ Troca realizada! Você ganhou ${trade.want.name}!`);
+}
+
+function cancelTrade(id){
+  trades = trades.filter(t=>t.id!==id);
+  renderTrades();
+  showToast('🗑️ Proposta cancelada.');
+}
+
+function counterTrade(id){
+  showToast('↩️ Contraproposta enviada!');
+}
+
+// ============================================================
+//  MERCADO
+// ============================================================
+function setMarketTab(tab, btn){
+  currentMarketTab = tab;
+  document.querySelectorAll('#page-mercado .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMarket();
+}
+
+function renderMarket(){
+  document.getElementById('userCoins').textContent = userCoins;
+  let list = listings;
+  if(currentMarketTab==='rare') list = listings.filter(l=>l.sticker.rare);
+  if(currentMarketTab==='mine') list = listings.filter(l=>l.mine);
+  const container = document.getElementById('marketList');
+  if(!list.length){ container.innerHTML = '<p style="color:#aaa;text-align:center;padding:32px">Nenhuma figurinha à venda.</p>'; return; }
+  container.innerHTML = list.map(l => `
+    <div class="market-card">
+      <div class="trade-info">
+        <span style="font-size:2rem">${l.sticker.emoji}</span>
+        <div>
+          <h4>${l.sticker.name}</h4>
+          <p>${l.sticker.flag} ${l.sticker.team}</p>
+          <div style="margin-top:4px">
+            ${l.sticker.legend?'<span class="tag tag-legend">💎 Lendária</span>':''}
+            ${l.sticker.rare&&!l.sticker.legend?'<span class="tag tag-rare">⭐ Rara</span>':''}
+            ${!l.sticker.rare?'<span class="tag tag-common">Comum</span>':''}
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:0.75rem;color:#aaa;margin-bottom:4px">Vendedor: ${l.seller.split('_')[0]}</div>
+        <div class="price-tag">💰 ${l.price} moedas</div>
+        <div style="display:flex;gap:6px;margin-top:8px;justify-content:flex-end">
+          ${l.mine?
+            `<button class="btn-danger" onclick="removeListing('${l.id}')">🗑️ Remover</button>`:
+            `<button class="btn-success" onclick="buyListing('${l.id}')">🛒 Comprar</button>`
+          }
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buyListing(id){
+  const item = listings.find(l=>l.id===id);
+  if(!item) return;
+  if(userCoins < item.price){ showToast('❌ Moedas insuficientes!','#e94560'); return; }
+  userCoins -= item.price;
+  userCollection[item.sticker.id] = (userCollection[item.sticker.id]||0)+1;
+  listings = listings.filter(l=>l.id!==id);
+  updateStats();
+  renderMarket();
+  showToast(`✅ Comprado! ${item.sticker.name} adicionada à coleção!`);
+}
+
+function removeListing(id){
+  listings = listings.filter(l=>l.id!==id);
+  renderMarket();
+  showToast('🗑️ Anúncio removido.');
+}
+
+function openSellModal(){
+  const dups = allStickers.filter(s=>(userCollection[s.id]||0)>1);
+  if(!dups.length){ showToast('⚠️ Você não tem figurinhas repetidas para vender.','#e94560'); return; }
+  document.getElementById('sellSticker').innerHTML = dups.map(s=>`<option value="${s.id}">${s.flag} ${s.name} (${userCollection[s.id]-1} rep.)</option>`).join('');
+  document.getElementById('modalSell').classList.add('show');
+}
+
+function confirmSell(){
+  const id = document.getElementById('sellSticker').value;
+  const price = parseInt(document.getElementById('sellPrice').value)||25;
+  const s = allStickers.find(x=>x.id===id);
+  if(!s) return;
+  userCollection[id] = Math.max(0, (userCollection[id]||1)-1);
+  listings.unshift({id:'L'+Date.now(),seller:`${currentUser.name}_Você`,sticker:s,price,mine:true});
+  closeModal('modalSell');
+  updateStats();
+  showToast(`📤 ${s.name} colocada à venda por ${price} moedas!`);
+  renderMarket();
+}
+
+// ============================================================
+//  PACKS
+// ============================================================
+function updateCoinsDisplay(){
+  document.getElementById('userCoins2').textContent = userCoins;
+  document.getElementById('userPacks').textContent = freePacks;
+}
+
+function openFreePackIfAvailable(){
+  if(freePacks<=0){ showToast('❌ Você já usou todos os pacotes gratuitos hoje!','#e94560'); return; }
+  freePacks--;
+  buyPack('diario',5,0,true);
+}
+
+function buyPack(type, count, cost, free=false){
+  if(!free && userCoins < cost){ showToast('❌ Moedas insuficientes!','#e94560'); return; }
+  if(!free) userCoins -= cost;
+  updateCoinsDisplay();
+
+  const names = {basico:'Pacote Básico',prata:'Pacote Prata',ouro:'Pacote Ouro',lendario:'Pacote Lendário',diario:'Pacote Diário'};
+  document.getElementById('modalPackTitle').textContent = `🎁 Abrindo ${names[type]}...`;
+
+  // Draw stickers
+  const drawn = [];
+  const rareGuarantee = type==='prata'?1:type==='ouro'?3:type==='lendario'?5:0;
+  const legendGuarantee = type==='lendario';
+  for(let i=0;i<count;i++){
+    let pool = allStickers;
+    if(i < rareGuarantee) pool = allStickers.filter(s=>s.rare);
+    if(legendGuarantee && i===0) pool = allStickers.filter(s=>s.legend);
+    const s = pool[Math.floor(Math.random()*pool.length)];
+    drawn.push(s);
+    userCollection[s.id] = (userCollection[s.id]||0)+1;
+  }
+  updateStats();
+
+  const dupCount = drawn.filter(s=>userCollection[s.id]>1).length;
+  const result = document.getElementById('openingResult');
+  result.innerHTML = drawn.map((s,i) => {
+    const isDup = userCollection[s.id]>1;
+    return `<div class="result-sticker ${s.rare?'rare':''} ${isDup?'dup':''}" style="animation-delay:${i*0.12}s">
+      <div class="r-emoji">${s.emoji}</div>
+      <div class="r-name">${s.name}</div>
+      ${isDup?'<div class="r-dup">+REP</div>':''}
+    </div>`;
+  }).join('');
+  document.getElementById('dupNote').textContent = dupCount>0?`🔁 ${dupCount} figurinha(s) repetida(s) — use-as para trocar ou vender!`:'🎉 Todas novas!';
+  document.getElementById('modalPack').classList.add('show');
+}
+
+// ============================================================
+//  UTILS
+// ============================================================
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');}));
+
+function showToast(msg, bg='#009C3B'){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.background = bg; t.style.display = 'block';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.style.display='none',3000);
+}
+</script>
+</body>
+</html>

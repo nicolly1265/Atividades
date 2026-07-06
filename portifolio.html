@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minha Escola - Nicolly</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a1628;
+      color: white;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: #0d1f3c;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 65px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+    }
+
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .nav-logo span { color: #f5a623; }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 2px solid transparent;
+      color: white;
+      padding: 9px 22px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+    .nav-btn:hover { border-color: #f5a623; color: #f5a623; }
+    .nav-btn.active { background: #f5a623; color: #0d1f3c; border-color: #f5a623; }
+
+    .nav-btn-outline {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      padding: 9px 22px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+    .nav-btn-outline:hover { background: white; color: #0d1f3c; }
+
+    /* ===== DROPDOWN ===== */
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d1f3c;
+      border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 12px;
+      min-width: 200px;
+      padding: 8px 0;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      z-index: 200;
+    }
+    .dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu a {
+      display: block;
+      padding: 12px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+    .dropdown-menu a:hover { background: rgba(245,166,35,0.15); color: #f5a623; padding-left: 28px; }
+    .dropdown-menu a::before { content: "📁 "; }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 60px 60px;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      animation: fadeIn 0.8s ease;
+    }
+    .slide.active { display: flex; align-items: center; justify-content: space-between; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0d1f3c 0%, #1a3a6b 50%, #0d2a5c 100%);
+      z-index: 0;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      max-width: 55%;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    .slide-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .slide-title span { color: #f5a623; }
+
+    .slide-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #c8d8f0;
+      margin-bottom: 30px;
+      max-width: 480px;
+    }
+
+    .slide-cta {
+      background: #f5a623;
+      color: #0d1f3c;
+      border: none;
+      padding: 13px 32px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .slide-cta:hover { background: #ffd080; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,166,35,0.4); }
+
+    .slide-image {
+      position: relative;
+      z-index: 2;
+      width: 300px;
+      height: 380px;
+      flex-shrink: 0;
+    }
+    .slide-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+    .slide-image .img-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      background: linear-gradient(135deg, #1a3a6b, #2a5298);
+      border: 2px solid rgba(245,166,35,0.3);
+    }
+
+    /* Decorative shapes */
+    .hero-shape {
+      position: absolute;
+      z-index: 1;
+    }
+    .shape-1 {
+      width: 180px; height: 180px;
+      border: 2px solid rgba(245,166,35,0.3);
+      border-radius: 20px;
+      transform: rotate(30deg);
+      right: 380px; bottom: 40px;
+    }
+    .shape-2 {
+      width: 120px; height: 120px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      right: 50px; top: 60px;
+    }
+
+    /* Slide indicators */
+    .slide-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    .dot {
+      width: 10px; height: 10px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .dot.active { background: #f5a623; width: 28px; border-radius: 5px; }
+
+    .slide-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .slide-arrow:hover { background: #f5a623; color: #0d1f3c; }
+    .arrow-left { left: 15px; }
+    .arrow-right { right: 15px; }
+
+    /* ===== SECTION: SOBRE MIM ===== */
+    .section {
+      display: none;
+      padding: 70px 60px;
+      animation: fadeIn 0.6s ease;
+    }
+    .section.visible { display: block; }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #f5a623;
+      margin-bottom: 8px;
+    }
+    .section-divider {
+      width: 60px; height: 4px;
+      background: #f5a623;
+      border-radius: 2px;
+      margin-bottom: 30px;
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .sobre-photo {
+      width: 250px; height: 310px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #1a3a6b, #2a5298);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      border: 2px solid rgba(245,166,35,0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .sobre-text h2 { font-size: 1.8rem; margin-bottom: 15px; }
+    .sobre-text p { color: #c8d8f0; line-height: 1.8; margin-bottom: 15px; font-size: 1rem; }
+
+    /* Estilo do botão do LinkedIn */
+    .btn-linkedin {
+      display: inline-flex;
+      align-items: center;
+      background: #0077b5;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-top: 15px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(0,119,181,0.3);
+    }
+    .btn-linkedin:hover {
+      background: #005988;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,119,181,0.5);
+    }
+
+    .sobre-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .tag {
+      background: rgba(245,166,35,0.15);
+      border: 1px solid rgba(245,166,35,0.4);
+      color: #f5a623;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* ===== SECTION: MINHA ESCOLA ===== */
+    .escola-sobre-card {
+      background: linear-gradient(135deg, #0d1f3c, #162a4a);
+      border: 1px solid rgba(245,166,35,0.2);
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    .escola-sobre-card h3 {
+      font-size: 1.4rem;
+      color: #f5a623;
+      margin-bottom: 12px;
+    }
+    .escola-sobre-card p {
+      color: #c8d8f0;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .trimestre-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(255,255,255,0.07);
+      border: 2px solid rgba(255,255,255,0.15);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .tab-btn:hover { border-color: #f5a623; color: #f5a623; }
+    .tab-btn.active { background: #f5a623; color: #0d1f3c; border-color: #f5a623; }
+
+    .trimestre-content { display: none; animation: fadeIn 0.5s ease; }
+    .trimestre-content.active { display: block; }
+
+    .trimestre-header {
+      background: linear-gradient(135deg, #1a3a6b, #0d2a5c);
+      border-left: 5px solid #f5a623;
+      padding: 20px 25px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 30px;
+    }
+    .trimestre-header h3 { font-size: 1.4rem; margin-bottom: 5px; }
+    .trimestre-header p { color: #c8d8f0; font-size: 0.9rem; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #0d1f3c, #1a3060);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 25px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-5px); border-color: rgba(245,166,35,0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+    .card-icon { font-size: 2.5rem; margin-bottom: 14px; }
+    .card h4 { font-size: 1.1rem; margin-bottom: 10px; }
+    .card p { color: #c8d8f0; font-size: 0.88rem; line-height: 1.6; }
+
+    .card-badge {
+      display: inline-block;
+      background: rgba(245,166,35,0.15);
+      color: #f5a623;
+      border: 1px solid rgba(245,166,35,0.3);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    /* ===== SUB-MENU CATEGORIAS ===== */
+    .menu-categorias {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .menu-categorias button {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .menu-categorias button:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: #f5a623;
+      color: #f5a623;
+    }
+
+    .categoria-conteudo { display: none; }
+    .categoria-conteudo.ativo { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .btn-abrir {
+      background: #f5a623;
+      color: #0d1f3c;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: bold;
+      transition: 0.3s;
+      width: 100%;
+    }
+    .btn-abrir:hover { background: #ffd080; }
+
+    /* ===== MODAL ===== */
+    .modal {
+      display: none;
+      position: fixed; 
+      z-index: 1000; 
+      left: 0; top: 0;
+      width: 100%; height: 100%; 
+      background-color: rgba(0,0,0,0.85); 
+      overflow: auto; 
+      padding-top: 60px;
+    }
+    .modal-conteudo {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      animation: zoom 0.4s;
+    }
+    @keyframes zoom { from {transform:scale(0)} to {transform:scale(1)} }
+    .fechar {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      color: #f5a623;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .fechar:hover { color: #fff; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #060f1e;
+      text-align: center;
+      padding: 25px;
+      color: #6a8ab0;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    footer span { color: #f5a623; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Port<span>fólio</span></div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showHome()">🏠 Início</button>
+
+    <div class="dropdown">
+      <button class="nav-btn" onclick="showPortfolio()">🏫 Minha Escola ▾</button>
+      <div class="dropdown-menu">
+        <a href="#" onclick="showPortfolio(0); return false;">1º Trimestre</a>
+        <a href="#" onclick="showPortfolio(1); return false;">2º Trimestre</a>
+        <a href="#" onclick="showPortfolio(2); return false;">3º Trimestre</a>
+      </div>
+    </div>
+
+    <button class="nav-btn-outline" onclick="showSobre()">👤 Sobre Mim</button>
+  </div>
+</nav>
+
+<div id="heroSection" style="position:relative;">
+  <div class="slide-bg"></div>
+  <div class="hero-shape shape-1"></div>
+  <div class="hero-shape shape-2"></div>
+
+  <div class="hero slide active" id="slide-0">
+    <div class="slide-content">
+      <span class="slide-tag">✨ BEM-VINDO À MINHA JORNADA</span>
+      <h1 class="slide-title">Portfólio<br><span>Nicolly</span></h1>
+      <p class="slide-desc">
+        Estudante apaixonada por tecnologia e criação. Aqui você encontra as atividades da minha escola, trabalhos técnicos e evolução ao longo dos trimestres.
+      </p>
+      <button class="slide-cta" onclick="showPortfolio()">Ver minha escola ›</button>
+    </div>
+    <div class="slide-image">
+      <div class="img-placeholder">🧑‍💻</div>
+    </div>
+  </div>
+
+  <div class="hero slide" id="slide-1">
+    <div class="slide-content">
+      <span class="slide-tag">Um pouco sobre mim</span>
+      <h1 class="slide-title">Olá, meu nome é: <br><span>Nicolly</span></h1>
+      <p class="slide-desc">
+        Sou do 3° ano do ensino médio, faço o curso de DESENVOLVIMENTO DE SISTEMAS, tenho 17 anos. Para mais informações clicar no botão abaixo.
+      </p>
+      <button class="slide-cta" onclick="showSobre()">Sobre mim ›</button>
+    </div>
+    <div class="slide-image">
+      <div class="img-placeholder"></div>
+    </div>
+  </div>
+
+  <div class="hero slide" id="slide-2">
+    <div class="slide-content">
+      <span class="slide-tag">🚀 CONHECIMENTOS E CONQUISTAS</span>
+      <h1 class="slide-title">Minha<br><span>Escola</span></h1>
+      <p class="slide-desc">
+        Do 1º ao 3º trimestre, confira tudo que desenvolvi em sala de aula: trabalhos, apresentações, pesquisas e muito mais.
+      </p>
+      <button class="slide-cta" onclick="showPortfolio()">Explorar ›</button>
+    </div>
+    <div class="slide-image">
+      <div class="img-placeholder">🏫</div>
+    </div>
+  </div>
+
+  <button class="slide-arrow arrow-left" onclick="changeSlide(-1)">‹</button>
+  <button class="slide-arrow arrow-right" onclick="changeSlide(1)">›</button>
+
+  <div class="slide-indicators">
+    <div class="dot active" onclick="goToSlide(0)"></div>
+    <div class="dot" onclick="goToSlide(1)"></div>
+    <div class="dot" onclick="goToSlide(2)"></div>
+  </div>
+</div>
+
+<div class="section" id="sobreSection">
+  <div class="section-title">Sobre Mim</div>
+  <div class="section-divider"></div>
+  <div class="sobre-grid">
+    <div class="sobre-photo"><alt="">
+      
+    </div>
+    <div class="sobre-text">
+      <h2>Olá! Eu sou <span style="color:#f5a623">Nicolly</span></h2>
+      <p>
+        Sou estudante do ensino médio/técnico e estou sempre disposta a aprender. Tenho interesse em tecnologia e artes. Este espaço reúne meus trabalhos e projetos realizados na escola ao longo do ano.
+      </p>
+      <p>
+        Acredito que a educação é a chave para transformar o futuro. Cada projeto aqui representa um desafio superado e uma nova habilidade adquirida.
+      </p>
+      <p>
+        📍 Arapongas, Paraná &nbsp;|&nbsp; 📧 nicollycarolinesantosribeiri@email.com &nbsp;|&nbsp; nicolly.santos.ribeiro@escola.pr.gov.br
+      </p>
+      
+     
+      <div class="sobre-tags">
+        <span class="tag">📱 Mobile</span>
+        <span class="tag">⚙️ Back-end</span>
+        <span class="tag">🔬 Análise</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="portfolioSection">
+  <div class="section-title">Minha Escola</div>
+  <div class="section-divider"></div>
+
+  <div class="escola-sobre-card">
+    <h3>🏫 Sobre a Minha Instituição de Ensino</h3>
+    <p>
+        O Colégio Estadual Unidade Polo (Ensino Fundamental, Médio e Profissional) é uma tradicional instituição pública de ensino em Arapongas. Localizado na Rua Pavão, 831, no Centro da cidade, o colégio é mantido pelo Governo do Estado do Paraná.Detalhes da InstituiçãoLocalização: Rua Pavão, 831, CentroNíveis de Ensino: Ensino Fundamental (Anos Finais), Ensino Médio Regular e Educação de Jovens e Adultos (EJA).Destaque: Além do ensino regular, a instituição oferece ensino técnico profissionalizante, como o curso de Técnico em Programação de Jogos Digitais. 
+  </div>
+  <div class="trimestre-tabs">
+    <button class="tab-btn active" onclick="showTrimestre(0, this)">📅 1º Trimestre</button>
+    <button class="tab-btn" onclick="showTrimestre(1, this)">📅 2º Trimestre</button>
+    <button class="tab-btn" onclick="showTrimestre(2, this)">📅 3º Trimestre</button>
+  </div>
+
+  <div class="trimestre-content active" id="tri-0">
+    <div class="trimestre-header">
+      <h3>1º Trimestre</h3>
+      <p>Janeiro – Abril &nbsp;|&nbsp; Explore os sites e apps que criei em sala de aula!</p>
+    </div>
+
+    <div class="menu-categorias">
+      <button onclick="mostrarCategoria('javascript')">🟨 JavaScript</button>
+      <button onclick="mostrarCategoria('html')">🟧 HTML</button>
+      <button onclick="mostrarCategoria('gamma')">🟪 Gamma</button>
+      <button onclick="mostrarCategoria('expo')">⬛ Expo</button>
+    </div>
+
+    <section id="projetos">
+      
+      <div id="javascript" class="categoria-conteudo ativo">
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/filtrar.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 1</h4><p>Filtrar.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/Media_Se.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 2</h4><p>media.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/Brake_continue.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 3</h4><p>Brake_continue.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/areatriangulo.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 4</h4><p>areatriangulo.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/iniciobackendd/blob/main/array.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 5</h4><p>array.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/operacoesbasicas.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 6</h4><p>operações basicas.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/iniciobackendd/blob/main/carro.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 7</h4><p>carro.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/iniciobackendd/blob/main/selectionSort.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 8</h4><p>selectionSort.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/hello%20world.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 9</h4><p>helloworld.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/notas.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 10</h4><p>notas.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/objeto.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 11</h4><p>objeto.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/triangulo%20(2).js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 12</h4><p>triangulo(2).js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/usandobreak.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 13</h4><p>usandobreak.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/usandofor.js')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 14</h4><p>usandofor.js</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('')">
+          <div class="card-icon">💻</div>
+          <h4>Projeto 15</h4><p>variaveis.js</p>
+        </div>
+      </div>
+
+      <div id="html" class="categoria-conteudo">
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/iniciobackendd/blob/main/copaindex.html')">
+          <div class="card-icon">🌐</div>
+          <h4>Projeto 16</h4><p>copa index.html</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://github.com/nicolly1265/TodosOsSites/blob/main/hello%20world.html')">
+          <div class="card-icon">🌐</div>
+          <h4>Projeto 17</h4><p>helloworld.html</p>
+        </div>
+      </div>
+
+      <div id="gamma" class="categoria-conteudo">
+        <div class="card" onclick="abrirProjeto('https://gamma.app/docs/As-Maiores-Startups-do-Mundo-em-2026-5c4m4l3m55caytl')">
+          <div class="card-icon">📊</div>
+          <h4>Projeto 18</h4><p>As maiores startups</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://gamma.app/docs/Metricas-e-Melhorias-nos-Negocios-ccf5uc8x7uhk803')">
+          <div class="card-icon">📊</div>
+          <h4>Projeto 19</h4><p>Melhorias nos negócios</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://gamma.app/docs/Agenda-Escolar-Digital-cmee274ior4vsd9')">
+          <div class="card-icon">📊</div>
+          <h4>Projeto 20</h4><p>Agenda escolar digital</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://gamma.app/docs/Propriedade-Intelectual-snedlq86b3urh5x')">
+          <div class="card-icon">📊</div>
+          <h4>Projeto 21</h4><p>Propriedade intelectual</p>
+        </div>
+        <div class="card" onclick="abrirProjeto('https://gamma.app/docs/Untitled-8jxsylhvzbprp9d')">
+          <div class="card-icon">📊</div>
+          <h4>Projeto 22</h4><p>Plano de negócios</p>
+        </div>
+      </div>
+
+      <div id="expo" class="categoria-conteudo">
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h4>Meu Primeiro App</h4> 
+          <p>Clique em abrir para escanear o QR Code.</p>
+          <button class="btn-abrir" onclick="ampliarImagem('qrcodesimples.png')">Abrir QR Code</button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h4>Meu Segundo App</h4> 
+          <p>Clique em abrir para escanear o QR Code.</p>
+          <button class="btn-abrir" onclick="ampliarImagem('qrcodeclique.png')">Abrir QR Code</button>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <div class="trimestre-content" id="tri-1">
+    <div class="trimestre-header">
+      <h3>2º Trimestre</h3>
+      <p>Maio – Agosto &nbsp;|&nbsp; Aprofundamento dos conhecimentos</p>
+    </div>
+    <div class="menu-categorias">
+      <button onclick="mostrarCategoria('Google IA studios')">🟨 Google IA Studios</button>
+    </div>
+
+    <section id="projetos">
+       </div>
+        <div id="javascript" class="categoria-conteudo ativo">
+          <div class="card" onclick="abrirProjeto('https://outstanding-fin-flow-smart.base44.app')">
+            <div class="card-icon">💻</div>
+            <h4>Projeto 1</h4><p>easy-finace</p>
+          </div>
+          <div id="javascript" class="categoria-conteudo ativo">
+            <div class="card" onclick="abrirProjeto('https://petspa-care-hub.base44.app')">
+              <div class="card-icon">💻</div>
+              <h4>Projeto 1</h4><p>petspa</p>
+            </div>
+            <div id="javascript" class="categoria-conteudo ativo">
+              <div class="card" onclick="abrirProjeto('https://monster-class-hub.base44.app')">
+                <div class="card-icon">💻</div>
+                <h4>Projeto 1</h4><p>classdojo</p>
+                <p>estou arrumando</p>
+              </div>
+              <div id="javascript" class="categoria-conteudo ativo">
+                <div class="card" onclick="abrirProjeto('https://code-sophisticated-quest-flow.base44.app')">
+                  <div class="card-icon">💻</div>
+                  <h4>Projeto 1</h4><p>codeduo</p>
+                  <p>estou arrumando</p>
+                </div>
+          <p>Estou arrumando os outros sites </p>
+      </div>
+
+  </div>
+
+  <div class="trimestre-content" id="tri-2">
+    <div class="trimestre-header">
+      <h3>3º Trimestre</h3>
+      <p>Setembro – Dezembro &nbsp;|&nbsp; Consolidação e projetos finais</p>
+    </div>
+   
+</div>
+
+<footer>
+  Feito com ❤️ por <span>Nicolly</span> &nbsp;|&nbsp; Portfólio Escolar 2026
+</footer>
+
+<div id="modalImagem" class="modal">
+  <span class="fechar" onclick="fecharModal()">&times;</span>
+  <img class="modal-conteudo" id="imgAmpliada">
+</div>
+
+<script>
+  // ===== NAVEGAÇÃO BÁSICA =====
+  function hideAll() {
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('sobreSection').classList.remove('visible');
+    document.getElementById('portfolioSection').classList.remove('visible');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  function showHome() {
+    hideAll();
+    document.getElementById('heroSection').style.display = 'block';
+    document.querySelectorAll('.nav-btn')[0].classList.add('active');
+  }
+
+  function showSobre() {
+    hideAll();
+    document.getElementById('sobreSection').classList.add('visible');
+  }
+
+  function showPortfolio(tab = 0) {
+    hideAll();
+    document.getElementById('portfolioSection').classList.add('visible');
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    tabs[tab].classList.add('active');
+    document.querySelectorAll('.trimestre-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tri-' + tab).classList.add('active');
+  }
+
+  function showTrimestre(idx, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.trimestre-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tri-' + idx).classList.add('active');
+  }
+
+  // ===== CARROSSEL =====
+  let currentSlide = 0;
+  const totalSlides = 3;
+  let autoTimer;
+
+  function goToSlide(n) {
+    document.getElementById('slide-' + currentSlide).classList.remove('active');
+    document.querySelectorAll('.dot')[currentSlide].classList.remove('active');
+    currentSlide = (n + totalSlides) % totalSlides;
+    document.getElementById('slide-' + currentSlide).classList.add('active');
+    document.querySelectorAll('.dot')[currentSlide].classList.add('active');
+  }
+
+  function changeSlide(dir) {
+    clearInterval(autoTimer);
+    goToSlide(currentSlide + dir);
+    startAuto();
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(() => goToSlide(currentSlide + 1), 5000);
+  }
+  startAuto();
+
+  // ===== FUNÇÕES DOS SEUS PROJETOS =====
+  function abrirProjeto(url) {
+    if (url !== '') {
+      window.open(url, '_blank');
+    } else {
+      alert("Link indisponível no momento.");
+    }
+  }
+
+  function mostrarCategoria(idCategoria) {
+    const categorias = document.querySelectorAll('.categoria-conteudo');
+    categorias.forEach(categoria => {
+      categoria.classList.remove('ativo');
+    });
+    document.getElementById(idCategoria).classList.add('ativo');
+  }
+
+  function ampliarImagem(caminhoDaImagem) {
+    const modal = document.getElementById('modalImagem');
+    const imgElement = document.getElementById('imgAmpliada');
+    imgElement.src = caminhoDaImagem;
+    modal.style.display = "block";
+  }
+
+  function fecharModal() {
+    document.getElementById('modalImagem').style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('modalImagem');
+    if (event.target == modal) {
+      fecharModal();
+    }
+  }
+</script>
+</body>
+</html>
